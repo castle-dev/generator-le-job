@@ -1,6 +1,6 @@
 {
   "name": "generator-le-job",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "src/index.js",
   "repository": {
@@ -8,10 +8,12 @@
     "url": "git://github.com/castle-dev/generator-le-job.git"
   },
   "author": "Castle <castle-dev@entercastle.com> (http://entercastle.com/)",
-  "licenses": [{
-    "type": "MIT",
-    "url": "https://github.com/castle-dev/generator-le-job/blob/develop/LICENSE-MIT"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/castle-dev/generator-le-job/blob/develop/LICENSE-MIT"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/castle-dev/generator-le-job/issues"
   },
