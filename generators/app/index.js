@@ -34,35 +34,6 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
       );
     };
 
-    function addToIndex(pathToAdd) {
-      var hook = '<!-- YOEMAN HOOK -->';
-      var path = 'client/index.html';
-      var file = wiring.readFileAsString(path);
-      if (!file || file.indexOf(hook) === -1) {
-        console.log('Unable to find hook "' + hook + '"in ' + path);
-        return;
-      }
-      var insert = '<script type="text/javascript" src="' + pathToAdd + '"></script>';
-
-      if (file.indexOf(insert) === -1) {
-        wiring.writeFileFromString(file.replace(hook, hook + '\n\t' + insert), path);
-      }
-    };
-
-    function addToAppModules(module) {
-      var hook = '/*--YEOMAN-HOOK--*/';
-      var path = 'client/src/app/app.js';
-      var file = wiring.readFileAsString(path);
-      if (!file || file.indexOf(hook) === -1) {
-        console.log('Unable to find hook "' + hook + '"in ' + path);
-        return;
-      }
-      var insert = "'" + module + "',";
-      if (file.indexOf(insert) === -1) {
-        wiring.writeFileFromString(file.replace(hook, hook + '\n\t' + insert), path);
-      }
-    };
-
     answers.paramCaseJobClassName = answers.paramCaseJobName + '-job';
     answers.camelCaseJobClassName = formatter.camel(answers.paramCaseJobClassName);
     answers.pascalCaseJobClassName = formatter.pascal(answers.paramCaseJobClassName);
@@ -82,37 +53,37 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
     function requireInWorker() {
       var hook = '/*--YEOMAN-REQUIRE-HOOK--*/';
       var path = 'app/worker.js';
-      var insert = 'var ' + answers.pascalCaseJobClassName + " = require('./jobs/" + paramCaseJobClassName + ".js');\n";
+      var insert = 'var ' + answers.pascalCaseJobClassName + " = require('./jobs/" + answers.paramCaseJobClassName + ".js');";
       addToFile(hook, path, insert);
     }
 
     function declareVarInWorker() {
       var hook = '/*--YEOMAN-DECLARE-VAR-HOOK--*/';
       var path = 'app/worker.js';
-      var insert = 'var ' + answers.camelCaseJobClassName + ';\n';
+      var insert = 'var ' + answers.camelCaseJobClassName + ';';
       addToFile(hook, path, insert);
     }
 
     function setVarInWorker() {
       var hook = '/*--YEOMAN-SET-VAR-HOOK--*/';
       var path = 'app/worker.js';
-      var insert = '\t' + answers.camelCaseJobClassName + ' = new ' + answers.pascalCaseJobClassName + '(storageService, emailService);\n';
+      var insert = '\t' + answers.camelCaseJobClassName + ' = new ' + answers.pascalCaseJobClassName + '(storageService, emailService);';
       addToFile(hook, path, insert);
     }
 
     function addToPerformJobSwitchInWorker() {
       var hook = '/*--YEOMAN-PERFORM-JOB-SWITCH-HOOK--*/';
       var path = 'app/worker.js';
-      var insert = "\t\tcase '" + answers.paramCaseJobName + "':\n";
-      insert += '\t\t\t' + answers.camelCaseJobClassName + '.run(job, complete);\n';
-      insert += '\t\t\tbreak;\n'
+      var insert = "\t\tcase '" + answers.paramCaseJobName + "':";
+      insert += '\t\t\t' + answers.camelCaseJobClassName + '.run(job, complete);';
+      insert += '\t\t\tbreak;';
       addToFile(hook, path, insert);
     }
 
     function addToREADME() {
       var hook = '// YEOMAN HOOK //';
       var path = 'README.md';
-      var insert = " * '" + answers.paramCaseJobName + "' {}\n";
+      var insert = " * '" + answers.paramCaseJobName + "' {}";
       addToFile(hook, path, insert);
     }
 

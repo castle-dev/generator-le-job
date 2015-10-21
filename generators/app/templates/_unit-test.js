@@ -21,6 +21,7 @@ describe('<%= pascalCaseJobClassName %>', function() {
     StorageService.prototype = storageServicePrototype;
     mockStorageService = new StorageService();
     mockJoinedData = {};
+    var mockRecord = {};
     mockRecord.join = sinon.stub().returns(q.when(mockJoinedData))
     mockStorageService.fetchRecord = sinon.stub().returns(q.when(mockRecord));
 
