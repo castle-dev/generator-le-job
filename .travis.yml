@@ -1,0 +1,20 @@
+language: node_js
+before_install:
+- npm install -g gulp mocha
+- npm install
+- npm test
+install:
+- git config --global user.email "travis-ci@entercastle.com"
+- git config --global user.name "Travis Castle"
+script:
+- gulp docs
+- cd docs
+- git init
+- git remote add origin "https://${GH_TOKEN}@github.com/castle-dev/generator-le-job.git"
+- git checkout -B gh-pages
+- git add .
+- git commit -m "Updating documentation"
+- git push origin gh-pages -fq > /dev/null
+env:
+  global:
+    - ENVIRONMENT=staging
