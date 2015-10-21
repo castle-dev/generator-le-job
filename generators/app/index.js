@@ -63,9 +63,6 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
       }
     };
 
-    answers.camelCaseJobName = formatter.camel(answers.paramCaseJobName);
-    answers.pascalCaseJobName = formatter.pascal(answers.paramCaseJobName);
-
     answers.paramCaseJobClassName = answers.paramCaseJobName + '-job';
     answers.camelCaseJobClassName = formatter.camel(answers.paramCaseJobClassName);
     answers.pascalCaseJobClassName = formatter.pascal(answers.paramCaseJobClassName);
@@ -83,45 +80,39 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
     }
 
     function requireInWorker() {
-      var hook = '/*--YEOMAN-HOOK--*/';
-      var path = 'client/src/app/app.js';
-      var insert = "'" + module + "',";
-
-      var file = wiring.readFileAsString(path);
-      if (!file || file.indexOf(hook) === -1) {
-        console.log('Unable to find hook "' + hook + '"in ' + path);
-        return;
-      }
-      if (file.indexOf(insert) === -1) {
-        wiring.writeFileFromString(file.replace(hook, hook + '\n\t' + insert), path);
-      }
+      var hook = '/*--YEOMAN-REQUIRE-HOOK--*/';
+      var path = 'app/worker.js';
+      var insert = 'var ' + answers.pascalCaseJobClassName + " = require('./jobs/" + paramCaseJobClassName + ".js');\n";
+      addToFile(hook, path, insert);
     }
 
     function declareVarInWorker() {
-      var hook = '';
-      var path = '';
-      var insert = '';
+      var hook = '/*--YEOMAN-DECLARE-VAR-HOOK--*/';
+      var path = 'app/worker.js';
+      var insert = 'var ' + answers.camelCaseJobClassName + ';\n';
       addToFile(hook, path, insert);
     }
 
     function setVarInWorker() {
-      var hook = '';
-      var path = '';
-      var insert = '';
+      var hook = '/*--YEOMAN-SET-VAR-HOOK--*/';
+      var path = 'app/worker.js';
+      var insert = '\t' + answers.camelCaseJobClassName + ' = new ' + answers.pascalCaseJobClassName + '(storageService, emailService);\n';
       addToFile(hook, path, insert);
     }
 
     function addToPerformJobSwitchInWorker() {
-      var hook = '';
-      var path = '';
-      var insert = '';
+      var hook = '/*--YEOMAN-PERFORM-JOB-SWITCH-HOOK--*/';
+      var path = 'app/worker.js';
+      var insert = "\t\tcase '" + answers.paramCaseJobName + "':\n";
+      insert += '\t\t\t' + answers.camelCaseJobClassName + '.run(job, complete);\n';
+      insert += '\t\t\tbreak;\n'
       addToFile(hook, path, insert);
     }
 
     function addToREADME() {
-      var hook = '';
-      var path = '';
-      var insert = '';
+      var hook = '// YEOMAN HOOK //';
+      var path = 'README.md';
+      var insert = " * '" + answers.paramCaseJobName + "' {}\n";
       addToFile(hook, path, insert);
     }
 
