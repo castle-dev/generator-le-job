@@ -83,7 +83,7 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
     function addToREADME() {
       var hook = '// YEOMAN HOOK //';
       var path = 'README.md';
-      var insert = " * '" + answers.paramCaseJobName + "' {}";
+      var insert = " * `" + answers.paramCaseJobName + "` {}";
       addToFile(hook, path, insert);
     }
 
