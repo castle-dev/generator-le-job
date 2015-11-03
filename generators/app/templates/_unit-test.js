@@ -1,4 +1,4 @@
-var <%= pascalCaseJobClassName %> = require('../../../app/jobs/check-rent.js');
+var <%= pascalCaseJobClassName %> = require('../../../app/jobs/<%= paramCaseJobClassName %>.js');
 var q = require('q');
 var StorageService = require('le-storage-service');
 var EmailService = require('le-email-service');
