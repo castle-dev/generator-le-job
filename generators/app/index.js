@@ -74,9 +74,9 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
     function addToPerformJobSwitchInWorker() {
       var hook = '/*--YEOMAN-PERFORM-JOB-SWITCH-HOOK--*/';
       var path = 'app/worker.js';
-      var insert = "\t\tcase '" + answers.paramCaseJobName + "':";
-      insert += '\t\t\t' + answers.camelCaseJobClassName + '.run(job, complete);';
-      insert += '\t\t\tbreak;';
+      var insert = "    case '" + answers.paramCaseJobName + "':\n";
+      insert += '      ' + answers.camelCaseJobClassName + '.run(job, complete);\n';
+      insert += '      break;';
       addToFile(hook, path, insert);
     }
 
