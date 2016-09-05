@@ -38,8 +38,8 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
     answers.camelCaseJobClassName = formatter.camel(answers.paramCaseJobClassName);
     answers.pascalCaseJobClassName = formatter.pascal(answers.paramCaseJobClassName);
 
-    copyTemplate('_job.js', 'app/jobs/' + answers.paramCaseJobClassName + '.js');
-    copyTemplate('_unit-test.js', 'test/unit/jobs/' + answers.paramCaseJobClassName + '.spec.js');
+    copyTemplate('_job.ts', 'app/jobs/' + answers.paramCaseJobClassName + '.ts');
+    copyTemplate('_unit-test.ts', 'test/unit/jobs/' + answers.paramCaseJobClassName + '.spec.ts');
     addToWorker();
     addToREADME();
 
@@ -67,7 +67,7 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
     function setVarInWorker() {
       var hook = '/*--YEOMAN-SET-VAR-HOOK--*/';
       var path = 'app/worker.js';
-      var insert = '\t' + answers.camelCaseJobClassName + ' = new ' + answers.pascalCaseJobClassName + '(storageService, emailService);';
+      var insert = '\t' + answers.camelCaseJobClassName + ' = new ' + answers.pascalCaseJobClassName + '(jobService);';
       addToFile(hook, path, insert);
     }
 
@@ -81,10 +81,17 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
     }
 
     function addToREADME() {
-      var hook = '// YEOMAN HOOK //';
+      var hook1 = '<> YEOMAN HOOK 1 <>';
+      var hook2 = '<> YEOMAN HOOK 2 <>';
       var path = 'README.md';
-      var insert = " * `" + answers.paramCaseJobName + "` {}";
-      addToFile(hook, path, insert);
+      var insert1 = "* [" + answers.paramCaseJobName + "](#" + answers.paramCaseJobName + ")\n";
+      var insert2 = "#### `" + answers.paramCaseJobName + "`\n";
+      insert2 += '```\n';
+      insert2 += '{\n';
+      insert2 += '}\n';
+      insert2 += '```';
+      addToFile(hook1, path, insert1);
+      addToFile(hook2, path, insert2);
     }
 
     function addToFile(hook, path, insert) {
