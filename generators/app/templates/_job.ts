@@ -5,10 +5,11 @@ class <%= pascalCaseJobClassName %> {
   }
 
   public run (job:Object, complete:()=>void): Promise<any> {
-    function perform<%= pascalCaseJobClassName %>() {
-      return Promise.resolve();
-    }
-    return this.jobService.handleJob(job, complete, perform<%= pascalCaseJobClassName %>);
+    return this.jobService.handleJob(job, complete, this.perform<%= pascalCaseJobClassName %>);
+  }
+
+  private perform<%= pascalCaseJobClassName %>(job:Object):Promise<any> {
+    return Promise.resolve();
   }
 }
 
