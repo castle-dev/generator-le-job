@@ -4,12 +4,14 @@ class <%= pascalCaseJobClassName %> {
   constructor (private jobService) {
   }
 
-  public run (job:Object, complete:()=>void): Promise<any> {
-    return this.jobService.handleJob(job, complete, this.perform<%= pascalCaseJobClassName %>);
+  public run (job:any, complete:()=>void): Promise<any> {
+    return this.jobService.handleJob(job, complete,(job)=>{
+      return this.perform<%= pascalCaseJobClassName %>(job);
+    });
   }
 
-  private perform<%= pascalCaseJobClassName %>(job:Object):Promise<any> {
-    return Promise.resolve();
+  private perform<%= pascalCaseJobClassName %>(job:any):Promise<any> {
+    return Promise.resolve(job);
   }
 }
 
