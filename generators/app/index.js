@@ -67,7 +67,7 @@ var CastlePageGenerator = yeoman.generators.Base.extend({
     function setVarInWorker() {
       var hook = '/*--YEOMAN-SET-VAR-HOOK--*/';
       var path = 'app/worker.js';
-      var insert = '\t' + answers.camelCaseJobClassName + ' = new ' + answers.pascalCaseJobClassName + '(jobService);';
+      var insert = '\t' + answers.camelCaseJobClassName + ' = new ' + answers.pascalCaseJobClassName + '(services);';
       addToFile(hook, path, insert);
     }
 
