@@ -2,7 +2,7 @@ import Promise from 'ts-promise';
 import {LeBusinessLogicServicesInterface} from '@castle/le-business-logic';
 
 class <%= pascalCaseJobClassName %> {
-  constructor (private services) {
+  constructor (private services:LeBusinessLogicServicesInterface) {
   }
 
   public run (job:any, complete:()=>void): Promise<any> {
